@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <script src="components/loader.js"></script>
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+    document.addEventListener("deviceready", function(){
+            // デバイストークンを取得してinstallationに登録する
+            window.NCMB.monaca.setDeviceToken(
+                "1d20a06696915b4ff6aaf52ca7c3a0c7309d9e8e1685a1e5344231e0faa441f9",
+                "f6ed8452b6053b67c6aebe64cbf52543bbe5f5ad5b18a6c55fec19050b15daf2",
+                "1068183205366"
+            );
+        },false);
+    </script>
+    <script>
+    //メッセージを送付する
+    function sendMessage(){
+        var ncmb = new NCMB("1d20a06696915b4ff6aaf52ca7c3a0c7309d9e8e1685a1e5344231e0faa441f9","f6ed8452b6053b67c6aebe64cbf52543bbe5f5ad5b18a6c55fec19050b15daf2");
+        var push = new ncmb.Push();
+        var msg = document.getElementById("message");
+        push.set("immediateDeliveryFlag", true)
+            .set("message", msg.value)
+            .set("target", ["android"])
+            .set("title", "PushAppMassage");
+        push.send()
+            .then(function(push){
+            // 送信後処理
+            msg.value="";
+        })
+        .catch(function(err){
+           // エラー処理
+         });        
+    }
+
+    </script>
+</head>
+<body>
+	<br /><br />
+    <font size="6"><center><b>Monaca Push App</b></center></font>
+    <br />
+    <h5>送信するメッセージを下記に入力してください</h5>
+    <input id="message" type="text"/>
+    <br />
+    <button onclick="sendMessage()" >送　信</button>
+    <br /><br /><br /><br /><br /><br /><br />
+    <footer>
+        <p><font size="2"><center>NTT-k Shizuoka Team A.</center></font></p>
+    </footer>
+</body>
+</html>
